@@ -15,11 +15,14 @@ const (
 	ScreenWidth    = 800
 	ScreenHeight   = 600
 	GridBlockWidth = 20
+
+	GridRows    = 23
+	GridColumns = 10
 )
 
 func initGame() func(*ebiten.Image) error {
 
-	grid := NewGrid(10, 22, (uint16)(GridBlockWidth))
+	grid := NewGrid(200, 20, GridRows, GridColumns, GridBlockWidth)
 	grid.AddTetromino()
 
 	return func(screen *ebiten.Image) error {

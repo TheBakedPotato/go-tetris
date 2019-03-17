@@ -9,27 +9,42 @@ import (
 )
 
 type Grid struct {
-	width     uint16
-	height    uint16
-	blockSize uint16
+	position  point
+	columns   int
+	rows      int
+	blockSize int
 
-	// img        *ebiten.Image
 	tetrominos []Tetromino
+
+	gridLines []*Line
 }
 
-// func createGrid(g *Grid) *ebiten.Image {
-// 	img, _ := ebiten.NewImage((int)(g.width*g.blockSize), (int)(g.height*g.blockSize), ebiten.FilterDefault)
-
-// 	return nil
-// }
-
-func NewGrid(width, height, blockSize uint16) *Grid {
-	return &Grid{width: width, height: height, blockSize: blockSize}
+func NewGrid(xPos, yPos float64, rows, columns, blockSize int) *Grid {
+	grid := &Grid{position: point{X: xPos, Y: yPos}, rows: rows, columns: columns, blockSize: blockSize}
+	grid.generateGridLines()
+	return grid
 }
 
 func (g *Grid) DrawGrid(image *ebiten.Image) {
+	for _, gridLine := range g.gridLines {
+		gridLine.Draw(image)
+	}
 	for _, tetromino := range g.tetrominos {
 		tetromino.Draw(image)
+	}
+}
+
+func (g *Grid) generateGridLines() {
+	lineWidth := 1
+	width := g.columns * g.blockSize
+	height := g.rows * g.blockSize
+
+	for x := g.position.X; x <= g.position.X+float64(width); x += float64(g.blockSize) {
+		g.gridLines = append(g.gridLines, NewLine(lineWidth, height, x, g.position.Y))
+	}
+
+	for y := g.position.Y; y <= g.position.Y+float64(height); y += float64(g.blockSize) {
+		g.gridLines = append(g.gridLines, NewLine(width, lineWidth, g.position.X, float64(y)))
 	}
 }
 
@@ -48,8 +63,10 @@ func generateBlocks(blockWidth int) (blocks []*Block) {
 }
 
 func (g *Grid) AddTetromino() {
-	blocks := generateBlocks((int)(g.blockSize))
-	g.tetrominos = append(g.tetrominos, NewTetromino(TetrominoI, blocks))
+	blocks := generateBlocks(g.blockSize)
+	tetromino := NewTetromino(TetrominoI, blocks)
+	// tetromino.SetPosition
+	g.tetrominos = append(g.tetrominos, tetromino)
 }
 
 func (g *Grid) MoveTetrominoRight() {

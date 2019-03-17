@@ -30,6 +30,7 @@ type Tetromino interface {
 	Translate(x, y float64)
 	MoveDown(y float64)
 	Rotate(angle float64)
+	SetPosition(x, y float64)
 }
 
 func NewTetromino(tetrominoType TetrominoType, blocks []*Block) Tetromino {
@@ -37,12 +38,8 @@ func NewTetromino(tetrominoType TetrominoType, blocks []*Block) Tetromino {
 }
 
 func (t *tetromino) Draw(targetImage *ebiten.Image) {
-	// for _, block := range t.blocks {
-	// 	width, height := block.Size()
-	// }
 	for _, block := range t.blocks {
 		block.Draw(targetImage)
-		// targetImage.DrawImage(block.GetImage(), block.GetImageOptions())
 	}
 }
 
@@ -60,6 +57,16 @@ func (t *tetromino) MoveDown(y float64) {
 func (t *tetromino) Rotate(angle float64) {
 	for _, block := range t.blocks {
 		block.Rotate(angle, t.focalPoint)
+	}
+}
+
+func (t *tetromino) SetPosition(x, y float64) {
+	firstBlock := t.blocks[0]
+	dX := firstBlock.GetCenter().X - x
+	dY := firstBlock.GetCenter().Y - y
+
+	for _, block := range t.blocks {
+		block.Translate(dX, dY)
 	}
 }
 

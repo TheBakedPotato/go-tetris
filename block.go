@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 
 	"github.com/hajimehoshi/ebiten"
@@ -40,11 +39,13 @@ func (b *Block) GetWidth() (width int) {
 	return
 }
 
+func (b *Block) GetCenter() *point {
+	return b.center
+}
+
 func (b *Block) Translate(x, y float64) {
 	b.geoM.Translate(x, y)
 	b.updateCenter(x, y)
-	fmt.Println(b.geoM.String())
-	fmt.Println(b.center)
 }
 
 func (b *Block) Draw(targetImage *ebiten.Image) {

@@ -8,11 +8,11 @@ var (
 )
 
 func createITetromino(blocks []*Block) Tetromino {
-	var focalX float64 = float64(blocks[0].GetWidth() + 100)
-	focalY := float64(blocks[0].GetHeight() * 2)
+	var focalX float64 = float64(blocks[0].GetWidth() * 2)
+	focalY := float64(blocks[0].GetHeight())
 	blockY := 0
 	for _, block := range blocks {
-		block.Translate(100.0, (float64)(blockY))
+		block.Translate((float64)(blockY), 0.0)
 		blockY += block.GetHeight()
 	}
 
