@@ -13,7 +13,7 @@ func RegisterTetromino(name string, createFunc TetrominoCreateFunc) TetrominoTyp
 	return TetrominoType(name)
 }
 
-type point struct {
+type Point struct {
 	X float64
 	Y float64
 }
@@ -22,7 +22,7 @@ type tetromino struct {
 	length     uint8
 	width      uint8
 	blocks     []*Block
-	focalPoint point
+	focalPoint Point
 }
 
 type Tetromino interface {

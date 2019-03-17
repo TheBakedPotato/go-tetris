@@ -9,11 +9,11 @@ import (
 type Block struct {
 	img    *ebiten.Image
 	geoM   *ebiten.GeoM
-	center *point
+	center *Point
 }
 
 func NewBlock(img *ebiten.Image, geoM *ebiten.GeoM) *Block {
-	point := &point{X: float64(img.Bounds().Dx() / 2), Y: float64(img.Bounds().Dy() / 2)}
+	point := &Point{X: float64(img.Bounds().Dx() / 2), Y: float64(img.Bounds().Dy() / 2)}
 	return &Block{img: img, geoM: geoM, center: point}
 }
 
@@ -39,7 +39,11 @@ func (b *Block) GetWidth() (width int) {
 	return
 }
 
-func (b *Block) GetCenter() *point {
+func (b *Block) GetPosition() *Point {
+	return nil
+}
+
+func (b *Block) GetCenter() *Point {
 	return b.center
 }
 
@@ -52,7 +56,7 @@ func (b *Block) Draw(targetImage *ebiten.Image) {
 	targetImage.DrawImage(b.img, b.GetImageOptions())
 }
 
-func (b *Block) Rotate(angle float64, focalPoint point) {
+func (b *Block) Rotate(angle float64, focalPoint Point) {
 	dX := focalPoint.X - b.center.X
 	dY := focalPoint.Y - b.center.Y
 

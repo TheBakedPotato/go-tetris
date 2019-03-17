@@ -9,7 +9,7 @@ import (
 )
 
 type Grid struct {
-	position  point
+	position  Point
 	columns   int
 	rows      int
 	blockSize int
@@ -20,7 +20,7 @@ type Grid struct {
 }
 
 func NewGrid(xPos, yPos float64, rows, columns, blockSize int) *Grid {
-	grid := &Grid{position: point{X: xPos, Y: yPos}, rows: rows, columns: columns, blockSize: blockSize}
+	grid := &Grid{position: Point{X: xPos, Y: yPos}, rows: rows, columns: columns, blockSize: blockSize}
 	grid.generateGridLines()
 	return grid
 }
@@ -65,7 +65,7 @@ func generateBlocks(blockWidth int) (blocks []*Block) {
 func (g *Grid) AddTetromino() {
 	blocks := generateBlocks(g.blockSize)
 	tetromino := NewTetromino(TetrominoI, blocks)
-	// tetromino.SetPosition
+	// tetromino.SetPosition(g.position.X, g.position.Y)
 	g.tetrominos = append(g.tetrominos, tetromino)
 }
 

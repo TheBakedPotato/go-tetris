@@ -16,7 +16,7 @@ func createITetromino(blocks []*Block) Tetromino {
 		blockY += block.GetHeight()
 	}
 
-	focalPoint := point{X: focalX, Y: focalY}
+	focalPoint := Point{X: focalX, Y: focalY}
 	return &tetromino{blocks: blocks, focalPoint: focalPoint}
 }
 
