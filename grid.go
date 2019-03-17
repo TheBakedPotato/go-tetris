@@ -35,16 +35,17 @@ func (g *Grid) DrawGrid(image *ebiten.Image) {
 }
 
 func (g *Grid) generateGridLines() {
-	lineWidth := 1
+	lineWidth := 2
+	halfLineWidth := lineWidth / 2
 	width := g.columns * g.blockSize
 	height := g.rows * g.blockSize
 
 	for x := g.position.X; x <= g.position.X+float64(width); x += float64(g.blockSize) {
-		g.gridLines = append(g.gridLines, NewLine(lineWidth, height, x, g.position.Y))
+		g.gridLines = append(g.gridLines, NewLine(lineWidth, height+halfLineWidth, x-float64(halfLineWidth), g.position.Y-float64(halfLineWidth)))
 	}
 
-	for y := g.position.Y; y <= g.position.Y+float64(height); y += float64(g.blockSize) {
-		g.gridLines = append(g.gridLines, NewLine(width, lineWidth, g.position.X, float64(y)))
+	for y := g.position.Y - float64(halfLineWidth); y <= g.position.Y+float64(height); y += float64(g.blockSize) {
+		g.gridLines = append(g.gridLines, NewLine(width+lineWidth, lineWidth, g.position.X-float64(halfLineWidth), y))
 	}
 }
 
@@ -65,7 +66,7 @@ func generateBlocks(blockWidth int) (blocks []*Block) {
 func (g *Grid) AddTetromino() {
 	blocks := generateBlocks(g.blockSize)
 	tetromino := NewTetromino(TetrominoI, blocks)
-	// tetromino.SetPosition(g.position.X, g.position.Y)
+	tetromino.SetPosition(g.position.X, g.position.Y)
 	g.tetrominos = append(g.tetrominos, tetromino)
 }
 

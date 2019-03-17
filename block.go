@@ -40,7 +40,9 @@ func (b *Block) GetWidth() (width int) {
 }
 
 func (b *Block) GetPosition() *Point {
-	return nil
+	x := b.geoM.Element(0, 2)
+	y := b.geoM.Element(1, 2)
+	return &Point{X: x, Y: y}
 }
 
 func (b *Block) GetCenter() *Point {

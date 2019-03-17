@@ -61,9 +61,9 @@ func (t *tetromino) Rotate(angle float64) {
 }
 
 func (t *tetromino) SetPosition(x, y float64) {
-	firstBlock := t.blocks[0]
-	dX := firstBlock.GetCenter().X - x
-	dY := firstBlock.GetCenter().Y - y
+	oldPosition := t.blocks[0].GetPosition()
+	dX := x - oldPosition.X
+	dY := y - oldPosition.Y
 
 	for _, block := range t.blocks {
 		block.Translate(dX, dY)
